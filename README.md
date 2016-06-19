@@ -11,3 +11,7 @@ MongoDB and Mongoose
 Basic Authentication, Authentication with Passport
 
 Mongoose Population
+
+HTTPS and Secure Communication
+
+Using OAuth with Passport and Fb

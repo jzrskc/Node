@@ -77,4 +77,37 @@ router.get('/logout', function(req, res) {
   });
 });
 
+
+//Ovdje ce user biti poslan na FB da se autentificira
+router.get('/facebook', passport.authenticate('facebook'),
+  function(req, res){});
+
+//autentifikacija FB Usera
+router.get('/facebook/callback', function(req,res,next){
+  passport.authenticate('facebook', function(err, user, info) {
+    if (err) {
+      return next(err);
+    }
+    if (!user) {
+      return res.status(401).json({
+        err: info
+      });
+    }
+    req.logIn(user, function(err) {
+      if (err) {
+        return res.status(500).json({
+          err: 'Could not log in user'
+        });
+      }
+              var token = Verify.getToken(user);
+              res.status(200).json({
+        status: 'Login successful!',
+        success: true,
+        token: token
+      });
+    });
+  })(req,res,next);
+});
+
+
 module.exports = router;
